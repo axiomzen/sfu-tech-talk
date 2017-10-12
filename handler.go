@@ -4,6 +4,9 @@ import (
 	"encoding/json"
 	"io"
 	"net/http"
+	"strconv"
+
+	"github.com/andrewburian/powermux"
 )
 
 type QuestionHandler struct {
@@ -23,7 +26,24 @@ func encode(obj interface{}, w io.Writer) error {
 }
 
 func (h *QuestionHandler) GetQuestion(w http.ResponseWriter, r *http.Request) {
+	id := powermux.PathParam(r, "id")
 
+	idInt, err := strconv.Atoi(id)
+	if err != nil {
+		http.Error(w, "Bad request", http.StatusBadRequest)
+		return
+	}
+
+	q, err := h.db.GetQuestion(idInt)
+	if err != nil {
+		http.Error(w, "Database error", http.StatusInternalServerError)
+		return
+	}
+
+	if err := encode(q, w); err != nil {
+		http.Error(w, "Render error", http.StatusInternalServerError)
+		return
+	}
 }
 
 func (h *QuestionHandler) GetAllQuestions(w http.ResponseWriter, r *http.Request) {
@@ -61,5 +81,18 @@ func (h *QuestionHandler) AddQuestion(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *QuestionHandler) Upvote(w http.ResponseWriter, r *http.Request) {
+	id := powermux.PathParam(r, "id")
 
+	idInt, err := strconv.Atoi(id)
+	if err != nil {
+		http.Error(w, "Bad request", http.StatusBadRequest)
+		return
+	}
+
+	if err := h.db.Upvote(idInt); err != nil {
+		http.Error(w, "Database error", http.StatusInternalServerError)
+		return
+	}
+
+	w.WriteHeader(http.StatusNoContent)
 }
