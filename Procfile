@@ -1,1 +1,0 @@
-web: ubc-tech-talk
