@@ -38,7 +38,7 @@ func (db *DAL) GetQuestion(id int) (*Question, error) {
 
 func (db *DAL) GetAllQuestions() ([]*Question, error) {
 	questionsArr := make([]*Question, 0)
-	if err := db.conn.Model(questionsArr).Select(); err != nil {
+	if err := db.conn.Model(&questionsArr).Select(); err != nil {
 		return nil, err
 	}
 	return questionsArr, nil
