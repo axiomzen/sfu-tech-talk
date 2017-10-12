@@ -28,7 +28,7 @@ func (dal *DAL) GetQuestion(id int) (*Question, error) {
 
 func (dal *DAL) GetQuestions() ([]*Question, error) {
 	questions := make([]*Question, 0)
-	err := dal.conn.Model(questions).Select()
+	err := dal.conn.Model(&questions).Select()
 	return questions, err
 }
 
