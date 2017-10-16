@@ -43,7 +43,11 @@ func main() {
 
 	mux.Route("/questions").
 		GetFunc(questionHandler.GetQuestions).
-		PostFunc(questionHandler.AddQuestion)
+		PostFunc(questionHandler.AddQuestion).
+		Route("/:id").
+		GetFunc(questionHandler.GetQuestion).
+		Route("/vote").
+		PostFunc(questionHandler.Upvote)
 
 	port := os.Getenv("PORT")
 
