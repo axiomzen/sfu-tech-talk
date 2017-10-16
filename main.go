@@ -56,6 +56,7 @@ func main() {
 	questionRoute := mux.Route("/questions")
 	questionRoute.GetFunc(handler.GetQuestions)
 	questionRoute.PostFunc(handler.AddQuestion)
+	questionRoute.Route("/:id/vote").PostFunc(handler.Vote)
 
 	port := os.Getenv("PORT")
 
