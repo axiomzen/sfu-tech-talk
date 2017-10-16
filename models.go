@@ -5,7 +5,7 @@ import "github.com/go-pg/pg"
 // Question model
 type Question struct {
 	ID      int    `json:"id"`
-	Text    string `json:"text"`
+	Text    string `json:"body"`
 	Author  string `json:"author"`
 	Upvotes int    `json:"upvotes"`
 }
