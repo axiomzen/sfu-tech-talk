@@ -36,3 +36,25 @@ func (h *QuestionHandler) GetQuestions(w http.ResponseWriter, r *http.Request) {
 	}
 
 }
+
+func (h *QuestionHandler) AddQuestion(w http.ResponseWriter, r *http.Request) {
+
+	question := &Question{}
+
+	if err := decode(question, r.Body); err != nil {
+		http.Error(w, "Bad Request", http.StatusBadRequest)
+		return
+	}
+
+	if err := h.db.AddQuestion(question); err != nil {
+		http.Error(w, "Database error", http.StatusInternalServerError)
+		return
+	}
+
+	if err := encode(question, w); err != nil {
+		http.Error(w, "Render error", http.StatusInternalServerError)
+		return
+	}
+}
+
+func (h *QuestionHandler) Vote(w http.ResponseWriter, r *http.Request) {}
