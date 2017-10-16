@@ -1,6 +1,7 @@
 package main
 
 import "github.com/go-pg/pg"
+import "fmt"
 
 // Question model
 type Question struct {
@@ -28,6 +29,7 @@ func (dal *DAL) GetQuestions() ([]*Question, error) {
 
 func (dal *DAL) AddQuestion(q *Question) error {
 	_, err := dal.conn.Model(q).Insert()
+	fmt.Println(err)
 	return err
 }
 
