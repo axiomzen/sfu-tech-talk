@@ -28,6 +28,18 @@ func main() {
 	mux := powermux.NewServeMux()
 
 	mux.Route("/").MiddlewareFunc(func(w http.ResponseWriter, r *http.Request, n func(w http.ResponseWriter, r *http.Request)) {
+		w.Header().Set("Access-Control-Allow-Origin", "sfu-tech-talk-fe.herokuapp.com")
+
+		if r.Method == http.MethodOptions {
+			w.Header().Set("Access-Control-Allow-Header", "Authorization")
+			w.Header().Set("Access-Control-Allow-Method", "GET,POST")
+			return
+		}
+
+		n(w, r)
+	})
+
+	mux.Route("/").MiddlewareFunc(func(w http.ResponseWriter, r *http.Request, n func(w http.ResponseWriter, r *http.Request)) {
 		authToken := r.Header.Get("Authorization")
 		if authToken == "sfu" {
 			n(w, r)
