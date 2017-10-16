@@ -31,8 +31,8 @@ func main() {
 		w.Header().Set("Access-Control-Allow-Origin", "https://sfu-tech-talk-fe.herokuapp.com")
 
 		if r.Method == http.MethodOptions {
-			w.Header().Set("Access-Control-Allow-Header", "Authorization")
-			w.Header().Set("Access-Control-Allow-Method", "GET,POST")
+			w.Header().Set("Access-Control-Allow-Headers", "Authorization")
+			w.Header().Set("Access-Control-Allow-Methods", "GET,POST")
 			return
 		}
 
