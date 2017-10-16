@@ -27,6 +27,15 @@ func main() {
 
 	mux := powermux.NewServeMux()
 
+	mux.Route("/").OptionsFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Add("Access-Control-Allow-Origin", "*")
+		w.Header().Add("Access-Control-Allow-Method", "GET,POST")
+		w.Header().Add("Access-Control-Allow-Header", "Authorization")
+	}).MiddlewareFunc(func(w http.ResponseWriter, r *http.Request, n func(w http.ResponseWriter, _ *http.Request)) {
+		w.Header().Add("Access-Control-Allow-Origin", "*")
+		n(w, r)
+	})
+
 	mux.Route("/").MiddlewareFunc(func(w http.ResponseWriter, r *http.Request, n func(w http.ResponseWriter, r *http.Request)) {
 		authToken := r.Header.Get("Authorization")
 		if authToken == "sfu" {
