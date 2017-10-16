@@ -5,10 +5,10 @@ import "fmt"
 
 // Question model
 type Question struct {
-	id      int    `json:"id"`
-	text    string `json:"text"`
-	upvotes int    `json:"upvotes"`
-	author  string `json:"author"`
+	ID      int    `json:"id"`
+	Text    string `json:"text"`
+	Upvotes int    `json:"upvotes"`
+	Author  string `json:"author"`
 }
 
 type DAL struct {
