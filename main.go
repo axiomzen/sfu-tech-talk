@@ -28,6 +28,16 @@ func main() {
 	mux := powermux.NewServeMux()
 
 	mux.Route("/").MiddlewareFunc(func(w http.ResponseWriter, r *http.Request, n func(w http.ResponseWriter, r *http.Request)) {
+		authToken := r.Header.Get("Authorization")
+		if authToken == "sfu" {
+			n(w, r)
+			return
+		}
+
+		http.Error(w, "Unauthorized", http.StatusUnauthorized)
+	})
+
+	mux.Route("/").MiddlewareFunc(func(w http.ResponseWriter, r *http.Request, n func(w http.ResponseWriter, r *http.Request)) {
 		w.Header().Set("Access-Control-Allow-Origin", "https://sfu-tech-talk-fe.herokuapp.com")
 
 		if r.Method == http.MethodOptions {
@@ -37,16 +47,6 @@ func main() {
 		}
 
 		n(w, r)
-	})
-
-	mux.Route("/").MiddlewareFunc(func(w http.ResponseWriter, r *http.Request, n func(w http.ResponseWriter, r *http.Request)) {
-		authToken := r.Header.Get("Authorization")
-		if authToken == "sfu" {
-			n(w, r)
-			return
-		}
-
-		http.Error(w, "Unauthorized", http.StatusUnauthorized)
 	})
 
 	mux.Route("/ping").GetFunc(func(w http.ResponseWriter, r *http.Request) {
