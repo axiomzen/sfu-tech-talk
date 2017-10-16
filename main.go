@@ -21,6 +21,10 @@ func main() {
 		conn: pg.Connect(dbOpts),
 	}
 
+	questionHandler := &QuestionHandler{
+		db: dal,
+	}
+
 	mux := powermux.NewServeMux()
 
 	mux.Route("/").MiddlewareFunc(func(w http.ResponseWriter, r *http.Request, n func(w http.ResponseWriter, r *http.Request)) {
@@ -36,6 +40,10 @@ func main() {
 	mux.Route("/ping").GetFunc(func(w http.ResponseWriter, r *http.Request) {
 		io.WriteString(w, "pong")
 	})
+
+	mux.Route("/questions").
+		GetFunc(questionHandler.GetQuestions).
+		PostFunc(questionHandler.AddQuestion)
 
 	port := os.Getenv("PORT")
 
