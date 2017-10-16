@@ -4,6 +4,9 @@ import (
 	"encoding/json"
 	"io"
 	"net/http"
+	"strconv"
+
+	"github.com/andrewburian/powermux"
 )
 
 type QuestionHandler struct {
@@ -57,4 +60,20 @@ func (h *QuestionHandler) AddQuestion(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func (h *QuestionHandler) Vote(w http.ResponseWriter, r *http.Request) {}
+func (h *QuestionHandler) Vote(w http.ResponseWriter, r *http.Request) {
+	idStr := powermux.PathParam(r, "id")
+
+	id, err := strconv.Atoi(idStr)
+	if err != nil {
+		http.Error(w, "Bad request", http.StatusBadRequest)
+		return
+	}
+
+	if err := h.db.Upvote(id); err != nil {
+		http.Error(w, "Database error", http.StatusInternalServerError)
+		return
+	}
+
+	w.WriteHeader(http.StatusNoContent)
+
+}
