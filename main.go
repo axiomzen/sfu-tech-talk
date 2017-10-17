@@ -16,10 +16,10 @@ func main() {
 		authToken := r.Header.Get("Authorization")
 		if authToken != "sfu" {
 			http.Error(w, "Unauthorized", http.StatusUnauthorized)
+			return
 		}
 
 		n(w, r)
-		return
 	})
 
 	mux.Route("/ping").GetFunc(func(w http.ResponseWriter, r *http.Request) {
