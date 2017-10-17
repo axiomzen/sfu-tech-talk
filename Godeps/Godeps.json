@@ -6,6 +6,40 @@
 		{
 			"ImportPath": "github.com/andrewburian/powermux",
 			"Rev": "593c0f2b2e9f99b4aa366ebaa44323169458724d"
+		},
+		{
+			"ImportPath": "github.com/go-pg/pg",
+			"Comment": "v6.6.1",
+			"Rev": "91966ca9a74c1dc62ec494975fd594889907cd33"
+		},
+		{
+			"ImportPath": "github.com/go-pg/pg/internal",
+			"Comment": "v6.6.1",
+			"Rev": "91966ca9a74c1dc62ec494975fd594889907cd33"
+		},
+		{
+			"ImportPath": "github.com/go-pg/pg/internal/parser",
+			"Comment": "v6.6.1",
+			"Rev": "91966ca9a74c1dc62ec494975fd594889907cd33"
+		},
+		{
+			"ImportPath": "github.com/go-pg/pg/internal/pool",
+			"Comment": "v6.6.1",
+			"Rev": "91966ca9a74c1dc62ec494975fd594889907cd33"
+		},
+		{
+			"ImportPath": "github.com/go-pg/pg/orm",
+			"Comment": "v6.6.1",
+			"Rev": "91966ca9a74c1dc62ec494975fd594889907cd33"
+		},
+		{
+			"ImportPath": "github.com/go-pg/pg/types",
+			"Comment": "v6.6.1",
+			"Rev": "91966ca9a74c1dc62ec494975fd594889907cd33"
+		},
+		{
+			"ImportPath": "github.com/jinzhu/inflection",
+			"Rev": "1c35d901db3da928c72a72d8458480cc9ade058f"
 		}
 	]
 }

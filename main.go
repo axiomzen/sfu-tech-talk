@@ -5,10 +5,22 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/go-pg/pg"
+
 	"github.com/andrewburian/powermux"
 )
 
 func main() {
+
+	dbOpts, err := pg.ParseURL(os.Getenv("DATABASE_URL"))
+
+	if err != nil {
+		panic(err)
+	}
+
+	dal := &DAL{
+		conn: pg.Connect(dbOpts),
+	}
 
 	mux := powermux.NewServeMux()
 
