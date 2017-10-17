@@ -12,6 +12,16 @@ func main() {
 
 	mux := powermux.NewServeMux()
 
+	mux.Route("/").MiddlewareFunc(func(w http.ResponseWriter, r *http.Request, n func(w http.ResponseWriter, r *http.Request)) {
+		authToken := r.Header.Get("Authorization")
+		if authToken != "sfu" {
+			http.Error(w, "Unauthorized", http.StatusUnauthorized)
+		}
+
+		n(w, r)
+		return
+	})
+
 	mux.Route("/ping").GetFunc(func(w http.ResponseWriter, r *http.Request) {
 		io.WriteString(w, "pong")
 	})
