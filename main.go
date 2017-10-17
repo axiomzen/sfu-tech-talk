@@ -29,6 +29,18 @@ func main() {
 	mux := powermux.NewServeMux()
 
 	mux.Route("/").MiddlewareFunc(func(w http.ResponseWriter, r *http.Request, n func(w http.ResponseWriter, r *http.Request)) {
+		w.Header().Add("Access-Control-Allow-Origin", "https://sfu-talk.axiomzen.co")
+
+		if r.Method == http.MethodOptions {
+			w.Header().Add("Access-Control-Allow-Methods", "GET,POST")
+			w.Header().Add("Access-Control-Allow-Headers", "Authorization")
+			return
+		}
+
+		n(w, r)
+	})
+
+	mux.Route("/").MiddlewareFunc(func(w http.ResponseWriter, r *http.Request, n func(w http.ResponseWriter, r *http.Request)) {
 		authToken := r.Header.Get("Authorization")
 		if authToken != "sfu" {
 			http.Error(w, "Unauthorized", http.StatusUnauthorized)
