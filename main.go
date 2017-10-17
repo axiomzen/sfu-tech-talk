@@ -33,7 +33,7 @@ func main() {
 
 		if r.Method == http.MethodOptions {
 			w.Header().Add("Access-Control-Allow-Methods", "GET,POST")
-			w.Header().Add("Access-Control-Allow-Headers", "Authorization")
+			w.Header().Add("Access-Control-Allow-Headers", "Authorization, Content-Type")
 			return
 		}
 
