@@ -6,9 +6,24 @@ import (
 	"os"
 
 	"github.com/andrewburian/powermux"
+	"github.com/go-pg/pg"
 )
 
 func main() {
+
+	dbOpts, err := pg.ParseURL(os.Getenv("DATABASE_URL"))
+
+	if err != nil {
+		panic(err)
+	}
+
+	dal := &DAL{
+		conn: pg.Connect(dbOpts),
+	}
+
+	handler := &QuestionHandler{
+		db: dal,
+	}
 
 	mux := powermux.NewServeMux()
 
@@ -25,6 +40,12 @@ func main() {
 	mux.Route("/ping").GetFunc(func(w http.ResponseWriter, r *http.Request) {
 		io.WriteString(w, "pong")
 	})
+
+	questionRoute := mux.Route("/questions")
+
+	questionRoute.GetFunc(handler.GetQuestions)
+	questionRoute.PostFunc(handler.AddQuestion)
+	questionRoute.Route("/:id/vote").PostFunc(handler.Upvote) // /questions/:id/vote
 
 	port := os.Getenv("PORT")
 
