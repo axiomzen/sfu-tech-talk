@@ -1,0 +1,11 @@
+{
+	"ImportPath": "github.com/axiomzen/sfu-tech-talk",
+	"GoVersion": "go1.8",
+	"GodepVersion": "v79",
+	"Deps": [
+		{
+			"ImportPath": "github.com/andrewburian/powermux",
+			"Rev": "877e8870a009b1123f78362449d6d71180064de1"
+		}
+	]
+}
